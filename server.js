@@ -1,5 +1,6 @@
+require("dotenv").config();
 const express = require('express')
-const mongoo = require('mongoose')
+const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
 
@@ -8,12 +9,12 @@ const DocumentRoute = require('./routes/documentRoute')
 
 
 
-mongoo.connect(`mongodb+srv://vietanhdtd:${process.env.MONGO_PASSWORD}@cluster0.icth6.mongodb.net/tony-nguyen?retryWrites=true&w=majority`, {
+mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 })
 
-const db = mongoo.connection
+const db = mongoose.connection
 
 db.once('open', () => {
   console.log('db connectiion open');

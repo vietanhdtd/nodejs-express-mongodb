@@ -15,21 +15,22 @@ const getDocuments = (req, res, next) => {
 
 const addDocument = (req, res, next) => {
   const user = req.user
-  const doc = new Document({
-    title: req.body.title,
-    description: req.body.description,
-    file: req.body.file,
-    userId: user._id
-  })
-
-  doc.save().then(response => {
-    res.json({
-      message: 'Create Document success',
-      response
+  if (req.file && req.file.path) {
+    console.log('req: ', req.body);
+    const doc = new Document({
+      title: req.body.title,
+      description: req.body.description,
+      file: req.file.path,
+      userId: user._id
     })
-  }).catch(e => res.json({ error: e }))
 
-
+    doc.save().then(response => {
+      res.json({
+        message: 'Create Document success',
+        response
+      })
+    }).catch(e => res.json({ error: e }))
+  }
 }
 
 const deleteDocuments = (req, res, next) => {
