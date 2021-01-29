@@ -1,7 +1,7 @@
 const express = require('express')
 const DocumentController = require('../controllers/documentController')
 const Authenticate = require('../middleware/auth')
-const upload = require("../services/upload")
+const { upload } = require('../middleware/upload')
 
 const router = express.Router()
 

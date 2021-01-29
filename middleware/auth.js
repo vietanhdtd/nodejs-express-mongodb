@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 
 function Authenticate(req, res, next) {
   try {
+    console.log('Authenticate req: ', req.headers);
     const token = req.headers.authorization.split(' ')[1] // Bearer + token
     const { user } = jwt.verify(token, 'AzQ,PI)0(')
 

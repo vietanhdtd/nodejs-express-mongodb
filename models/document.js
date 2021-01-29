@@ -10,7 +10,8 @@ const DocumentsSchema = new Schema({
     type: String
   },
   file: {
-    type: String
+    type: Object,
+    required: true
   },
   userId: {
     type: String,

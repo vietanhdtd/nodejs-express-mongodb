@@ -11,11 +11,13 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: "mongoo-learning",
-  allowedFormats: ["jpg", "png", "jpeg"],
-  transformation: [{ width: 500, height: 500, crop: "limit" }],
+  params: {
+    folder: "mongoo-learning",
+    allowed_formats: ["jpg", "png", "jpeg"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  }
 });
 
 const upload = multer({ storage: storage });
 
-module.exports = upload;
+module.exports = { upload, cloudinary };
