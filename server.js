@@ -3,7 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyparser = require('body-parser')
-
+const { sendResponse } = require('./helper/helpers')
+const fetchComic = require('./app/blogtruyen')
 const UserRoute = require('./routes/usersRoute')
 const DocumentRoute = require('./routes/documentRoute')
 
@@ -33,3 +34,7 @@ app.listen(PORT, () => {
 
 app.use('/api/user', UserRoute)
 app.use('/api/document', DocumentRoute)
+
+app.use('/crawl', (_, res) => {
+  sendResponse(res)(fetchComic());
+})
