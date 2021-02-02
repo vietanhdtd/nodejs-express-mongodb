@@ -29,16 +29,15 @@ const registerUser = (req, res, next) => {
         message: 'Create user success',
         response
       })
-    }).catch(e => res.json({ error: e }))
+    }).catch(e => res.json(e))
 
   })
 }
 
 const deleteUser = (req, res, next) => {
-  User.findByIdAndDelete(req.params.id).then(response => {
+  User.findByIdAndDelete(req.params.id).then(() => {
     res.json({
-      message: 'Delete user success',
-      response
+      message: 'Delete user success'
     })
   }).catch(e => res.json({ error: e }))
 }
@@ -51,10 +50,10 @@ const updateUser = (req, res, next) => {
     phone: req.body.phone
   }
 
-  User.findByIdAndUpdate(req.body.id, { $set: user }).then(response => {
+  User.findByIdAndUpdate(req.body.id, user, { new: true }).then(response => {
     res.json({
       message: 'Update user success',
-      response: user
+      response
     })
   }).catch(e => res.json({ error: e }))
 }
@@ -65,11 +64,8 @@ const login = (req, res, next) => {
 
   User.findOne({ $or: [{ phone: userName }, { email: userName }] }).then(user => {
     if (user) {
-      console.log('user: ', user);
       bcrypt.hash(password, user.password, (error, result) => {
-        console.log('password: ', password);
         if (error) {
-          console.log('error: ', error);
           return res.json({ error })
         }
         if (result !== user.password) {
@@ -80,8 +76,8 @@ const login = (req, res, next) => {
           const token = jwt.sign({ user }, 'AzQ,PI)0(', {})
           return res.json({
             message: 'Login successfully',
+            token,
             user,
-            token
           })
         }
       })
